@@ -135,6 +135,37 @@ class SelfieListViewController: UITableViewController {
         return selfies.count
     }
 
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let share = UIContextualAction(style: .normal, title: "Share") { (action, view, boolValue) in
+            guard let image = self.selfies[indexPath.row].image else {
+                self.showError(message: "Unable to share selfie without an image")
+                return
+            }
+            let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            
+            self.present(activity, animated: true, completion: nil)
+        }
+        
+        share.backgroundColor = self.view.tintColor
+        
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, boolValue) in
+            let selfieToRemove = self.selfies[indexPath.row]
+            
+            do
+            {
+                try SelfieStore.shared.delete(selfie: selfieToRemove)
+                
+                self.selfies.remove(at: indexPath.row)
+                
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            catch
+            {
+                self.showError(message: "Failed to delete \(selfieToRemove.title).")
+            }
+        }
+        return UISwipeActionsConfiguration(actions: [delete, share])
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
@@ -150,11 +181,6 @@ class SelfieListViewController: UITableViewController {
         cell.imageView?.image = selfie.image
         
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
-      return UISwipeActionsConfiguration()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
