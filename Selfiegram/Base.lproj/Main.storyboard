@@ -282,9 +282,99 @@
             </objects>
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="y9B-0l-LAG">
+            <objects>
+                <navigationController storyboardIdentifier="CaptureScene" modalPresentationStyle="fullScreen" id="jfp-Dx-Ehu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6yA-3E-j5X">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="7xS-aL-DqT" kind="relationship" relationship="rootViewController" id="iwA-Hd-O8n"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZRC-5o-VfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1283" y="804"/>
+        </scene>
+        <!--Selfie!-->
+        <scene sceneID="913-cd-U4u">
+            <objects>
+                <viewController id="7xS-aL-DqT" customClass="CaptureViewController" customModule="Selfiegram" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="knF-rA-aYt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R8a-8b-9RE" customClass="PreviewView" customModule="Selfiegram" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <gestureRecognizers/>
+                            </view>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qw0-mR-cRd">
+                                <rect key="frame" x="0.0" y="822" width="414" height="40"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Dpw-4h-WQz">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to take a selfie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkf-ET-hPq">
+                                            <rect key="frame" x="135.5" y="9.5" width="143" height="21"/>
+                                            <gestureRecognizers/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="VrX-rB-2Jw" appends="YES" id="gOQ-kj-GmY"/>
+                                            </connections>
+                                        </label>
+                                    </subviews>
+                                    <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstItem="lkf-ET-hPq" firstAttribute="centerX" secondItem="Dpw-4h-WQz" secondAttribute="centerX" id="77T-kt-dRa"/>
+                                        <constraint firstItem="lkf-ET-hPq" firstAttribute="centerY" secondItem="Dpw-4h-WQz" secondAttribute="centerY" id="ZHI-da-Lch"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="dgN-eF-9hM"/>
+                                </constraints>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="HPZ-2E-d3E" firstAttribute="bottom" secondItem="R8a-8b-9RE" secondAttribute="bottom" id="369-n2-uAl"/>
+                            <constraint firstItem="R8a-8b-9RE" firstAttribute="leading" secondItem="HPZ-2E-d3E" secondAttribute="leading" id="3pS-Mb-ksl"/>
+                            <constraint firstItem="HPZ-2E-d3E" firstAttribute="trailing" secondItem="R8a-8b-9RE" secondAttribute="trailing" id="QWs-NH-bGI"/>
+                            <constraint firstItem="R8a-8b-9RE" firstAttribute="top" secondItem="HPZ-2E-d3E" secondAttribute="top" id="YmC-wf-aoL"/>
+                            <constraint firstItem="qw0-mR-cRd" firstAttribute="leading" secondItem="HPZ-2E-d3E" secondAttribute="leading" id="d1n-UK-CDm"/>
+                            <constraint firstItem="HPZ-2E-d3E" firstAttribute="bottom" secondItem="qw0-mR-cRd" secondAttribute="bottom" id="s2O-tD-bKE"/>
+                            <constraint firstItem="HPZ-2E-d3E" firstAttribute="trailing" secondItem="qw0-mR-cRd" secondAttribute="trailing" id="z65-P2-xEU"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HPZ-2E-d3E"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Selfie!" id="uZw-2S-3qO">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Bnd-06-SK6">
+                            <connections>
+                                <action selector="close:" destination="7xS-aL-DqT" id="XYD-4x-Buq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraPreview" destination="R8a-8b-9RE" id="nxD-Sv-QoQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u1l-ar-Drx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="VrX-rB-2Jw">
+                    <connections>
+                        <action selector="takeSelfie:" destination="7xS-aL-DqT" id="xjd-j2-K6I"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-407" y="804"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6S0-TO-JiA"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.56000000000000005" green="0.34999999999999998" blue="0.96999999999999997" alpha="1" colorSpace="calibratedRGB"/>
 </document>

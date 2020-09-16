@@ -8,8 +8,9 @@
 
 import UIKit
 import MapKit
+import CoreImage.CIFilterBuiltins
 
-class SelfieDetailViewController: UIViewController {
+class SelfieDetailViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var dateCreatedLabel
     : UILabel!
@@ -50,8 +51,10 @@ class SelfieDetailViewController: UIViewController {
             return
         }
         
+        self.selfieNameField.delegate = self
         selfieNameField.text = selfie.title
         dateCreatedLabel.text = dateFormatter.string(from:selfie.created)
+//        selfieImageView.image = self.downScaleImage(inputImage: selfie.image)
         selfieImageView.image = selfie.image
         
         if let position = selfie.position {
@@ -60,6 +63,15 @@ class SelfieDetailViewController: UIViewController {
         }
     }
 
+    // MARK: - Private
+    
+//    func isValid(str: String) -> Bool
+//    {
+//        let string = "[^<>\\/\\|%\\\\‘“]*";
+//        let displayNameTest = NSPredicate.init(format: "SELF MATCHES %@", string)
+//        return displayNameTest.evaluate(with: str)
+//    }
+    
     //MARK: - IBAction
 
     @IBAction func doneButtonTapped(_ sender: Any)
@@ -92,7 +104,8 @@ class SelfieDetailViewController: UIViewController {
         }
     }
     
-    @IBAction func sharedSelfie(_ sender: Any) {
+    @IBAction func sharedSelfie(_ sender: Any)
+    {
         guard let image = self.selfie?.image else {
             let alert = UIAlertController(title: "Error", message: "Unable to share selfie without an image", preferredStyle: .alert)
             
@@ -106,6 +119,23 @@ class SelfieDetailViewController: UIViewController {
         
         let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         self.present(activity, animated: true, completion: nil)
+    }
+    
+    override func didChangeValue(forKey key: String) {
+        print("hello")
+    }
+    
+    //MARK: - CoreImage -
+    func downScaleImage(inputImage: UIImage?) -> UIImage?
+    {
+        guard let inputImage = inputImage else {
+            return nil
+        }
+        let f = CIFilter.lanczosScaleTransform()
+        f.inputImage = CIImage(image: inputImage)
+        f.scale = 0.01
+        return UIImage(ciImage: f.outputImage!)
+    
     }
 }
 

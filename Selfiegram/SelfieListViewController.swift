@@ -96,21 +96,21 @@ class SelfieListViewController: UITableViewController {
         
         }
             
-        let imagePicker = UIImagePickerController()
+        // CaptureViewController
         
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagePicker.sourceType = .camera
-            
-            if UIImagePickerController.isCameraDeviceAvailable(.front) {
-                imagePicker.cameraDevice = .front
-            }
-        } else {
-            imagePicker.sourceType = .photoLibrary
+        guard let navigation = self.storyboard?.instantiateViewController(withIdentifier: "CaptureScene") as? UINavigationController, let capture = navigation.viewControllers.first as? CaptureViewController else {
+            fatalError("Failed to create the capture view controller!")
         }
         
-        imagePicker.delegate = self
+        capture.completion = {(image: UIImage?) in
+            if let image = image {
+                self.newSelfieTaken(image: image)
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+        }
         
-        self.present(imagePicker, animated: true, completion: nil)
+        self.present(navigation, animated: true, completion: nil)
     }
 
     //MARK: - CLLocationManagerDelegate
@@ -216,24 +216,13 @@ class SelfieListViewController: UITableViewController {
     }
 }
 
-extension SelfieListViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension SelfieListViewController : UINavigationControllerDelegate {
     // MARK: - UIImagePickerControllerDelegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
     {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage ?? info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-            let message = "Couldn't get a picture from the image picker!"
-            showError(message: message)
-            return
-        }
-        self.newSelfieTaken(image: image)
-        
-        self.dismiss(animated: true, completion: nil)
-    }
-    
+
     func newSelfieTaken(image: UIImage)
     {
         let newSelfie = Selfie(title: "New Selfie")

@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		543BF8AC24B2A584009EEFFB /* SelfieStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543BF8AB24B2A584009EEFFB /* SelfieStore.swift */; };
 		543BF8B224B2AF8D009EEFFB /* SelfieStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543BF8B124B2AF8D009EEFFB /* SelfieStoreTests.swift */; };
+		54422C6A24E7D068001472FD /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54422C6924E7D068001472FD /* CaptureViewController.swift */; };
 		54436D2E24D68F1500521CD8 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54436D2D24D68F1500521CD8 /* Theme.swift */; };
 		54436D2F24D698C400521CD8 /* Lobster_1.3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 54436D2A24D68DD800521CD8 /* Lobster_1.3.otf */; };
 		54436D3024D698C400521CD8 /* Quicksand-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 54436D2C24D68ED100521CD8 /* Quicksand-Bold.otf */; };
 		54436D3124D698C400521CD8 /* Quicksand-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 54436D2B24D68ED100521CD8 /* Quicksand-Regular.otf */; };
 		547083CF24CA03B7000180A0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547083CE24CA03B6000180A0 /* SettingsTableViewController.swift */; };
+		5499617D24E90D7000C166F5 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5499617C24E90D7000C166F5 /* CoreImage.framework */; };
+		54B8DB2924F692FC00DD1B83 /* OverlayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8DB2824F692FC00DD1B83 /* OverlayStore.swift */; };
 		54D922A724B0795900175071 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D922A624B0795900175071 /* AppDelegate.swift */; };
 		54D922A924B0795900175071 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D922A824B0795900175071 /* SceneDelegate.swift */; };
 		54D922AB24B0795900175071 /* SelfieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D922AA24B0795900175071 /* SelfieListViewController.swift */; };
@@ -44,11 +47,14 @@
 /* Begin PBXFileReference section */
 		543BF8AB24B2A584009EEFFB /* SelfieStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieStore.swift; sourceTree = "<group>"; };
 		543BF8B124B2AF8D009EEFFB /* SelfieStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieStoreTests.swift; sourceTree = "<group>"; };
+		54422C6924E7D068001472FD /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		54436D2A24D68DD800521CD8 /* Lobster_1.3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster_1.3.otf; sourceTree = "<group>"; };
 		54436D2B24D68ED100521CD8 /* Quicksand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.otf"; sourceTree = "<group>"; };
 		54436D2C24D68ED100521CD8 /* Quicksand-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Bold.otf"; sourceTree = "<group>"; };
 		54436D2D24D68F1500521CD8 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		547083CE24CA03B6000180A0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		5499617C24E90D7000C166F5 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		54B8DB2824F692FC00DD1B83 /* OverlayStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayStore.swift; sourceTree = "<group>"; };
 		54D922A324B0795900175071 /* Selfiegram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfiegram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D922A624B0795900175071 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54D922A824B0795900175071 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5499617D24E90D7000C166F5 /* CoreImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +108,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		5499617B24E90D6F00C166F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5499617C24E90D7000C166F5 /* CoreImage.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		54D9229A24B0795900175071 = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +123,7 @@
 				54D922BE24B0795B00175071 /* SelfiegramTests */,
 				54D922C924B0795B00175071 /* SelfiegramUITests */,
 				54D922A424B0795900175071 /* Products */,
+				5499617B24E90D6F00C166F5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +146,8 @@
 				54D922AA24B0795900175071 /* SelfieListViewController.swift */,
 				54D922AC24B0795900175071 /* SelfieDetailViewController.swift */,
 				54D922AE24B0795900175071 /* Main.storyboard */,
+				54B8DB2824F692FC00DD1B83 /* OverlayStore.swift */,
+				54422C6924E7D068001472FD /* CaptureViewController.swift */,
 				547083CE24CA03B6000180A0 /* SettingsTableViewController.swift */,
 				543BF8AB24B2A584009EEFFB /* SelfieStore.swift */,
 				54D922B124B0795A00175071 /* Assets.xcassets */,
@@ -293,10 +311,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				54D922A724B0795900175071 /* AppDelegate.swift in Sources */,
+				54422C6A24E7D068001472FD /* CaptureViewController.swift in Sources */,
 				543BF8AC24B2A584009EEFFB /* SelfieStore.swift in Sources */,
 				547083CF24CA03B7000180A0 /* SettingsTableViewController.swift in Sources */,
 				54D922A924B0795900175071 /* SceneDelegate.swift in Sources */,
 				54D922AB24B0795900175071 /* SelfieListViewController.swift in Sources */,
+				54B8DB2924F692FC00DD1B83 /* OverlayStore.swift in Sources */,
 				54D922AD24B0795900175071 /* SelfieDetailViewController.swift in Sources */,
 				54436D2E24D68F1500521CD8 /* Theme.swift in Sources */,
 			);
