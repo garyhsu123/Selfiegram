@@ -25,10 +25,11 @@ final class OverlayManager {
     typealias OverlayList = [OverlayInformation]
     private var overlayInfo: OverlayList
     
-    static let downloadURLBase = URL(string: "https://raw.githubusercontent.com"
-    + "thesecretlab/learning-swift-3rd-ed/master/Data/")!
+    private let loadingDispatchGroup = DispatchGroup()
+    
+    static let downloadURLBase = URL(string: "https://raw.githubusercontent.com/thesecretlab/learning-swift-3rd-ed/master/Data/")!
     class var overlayListUrl: URL {
-        return URL(string: "overlay.json",
+        return URL(string: "overlays.json",
         relativeTo: OverlayManager.downloadURLBase)!
     }
     
@@ -60,9 +61,101 @@ final class OverlayManager {
         return URL(string: assetName, relativeTo: OverlayManager.cacheDirectoryURL)
     }
     
-    func availableOverlays() -> [Overlay] { return [] }
-    func refreshOverlays(completion: @escaping (OverlayList?, Error?) -> Void) {}
-    func loadOverlayAssets(refresh: Bool = false, completion: @escaping() -> Void) {}
+    func availableOverlays() -> [Overlay]
+    {
+        return overlayInfo.compactMap{Overlay(info: $0)}
+    }
+    
+    func refreshOverlays(completion: @escaping (OverlayList?, Error?) -> Void) {
+        URLSession.shared.dataTask(with: OverlayManager.overlayListUrl, completionHandler: { (data, response , error) in
+            if let error = error {
+                NSLog("Failed to download \(OverlayManager.overlayListUrl): "
+                     + "\(error)")
+                completion(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                completion(nil, OverlayManagerError.notDataLoaded)
+                return
+            }
+            
+            do {
+                try data.write(to: OverlayManager.cacheOverlayListURL)
+            } catch let error {
+                NSLog("Failed to write data to \(OverlayManager.cacheOverlayListURL); reason: \(error)")
+                completion(nil, error)
+            }
+            
+            do {
+                let overlayList = try JSONDecoder().decode(OverlayList.self, from: data)
+                
+                self.overlayInfo = overlayList
+                
+                completion(self.overlayInfo, nil)
+                return
+            } catch let error {
+                completion(nil, OverlayManagerError.cannotParseData(underlyingError: error))
+            }
+            }).resume()
+    }
+    
+    func loadOverlayAssets(refresh: Bool = false, completion: @escaping() -> Void) {
+        if (refresh) {
+            self.refreshOverlays { (overlays, error) in
+                self.loadOverlayAssets(refresh: false, completion: completion)
+            }
+            return
+        }
+        
+        for info in overlayInfo {
+            let names = [info.icon, info.leftImage, info.rightImage]
+            
+            typealias TaskURL = (source: URL, destination: URL)
+            
+            let taskURLs: [TaskURL] = names.compactMap {
+                guard let sourceURL = URL(string: $0, relativeTo: OverlayManager.downloadURLBase) else {
+                    return nil
+                }
+                
+                guard let destinationURL = URL(string: $0, relativeTo:  OverlayManager.cacheDirectoryURL) else {
+                    return nil
+                }
+                
+                return (source: sourceURL, destination: destinationURL)
+            }
+            
+            for taskURL in taskURLs {
+                loadingDispatchGroup.enter()
+                
+                URLSession.shared.dataTask(with: taskURL.source, completionHandler: { (data, response, error) in
+                    defer {
+                        self.loadingDispatchGroup.leave()
+                    }
+                    
+                    guard let data = data else {
+                        NSLog("Failed to download \(taskURL.source): \(error!)")
+                        return
+                    }
+                    
+                    do {
+                        try data.write(to: taskURL.destination)
+                    } catch let error {
+                        NSLog("Failed to write to \(taskURL.destination): \(error)")
+                        return
+                    }
+                    }).resume()
+            }
+            
+            
+            
+                
+        }
+        
+        loadingDispatchGroup.notify(queue: .main) {
+            completion()
+        }
+    }
 }
 
 struct Overlay {
